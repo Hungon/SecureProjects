@@ -10,4 +10,4 @@ I'm going to implement functions and services to concern about security based on
 First of all, you may need to create key store file if you want to try this with your own key store file.
 </p>
 <h4>Command to check hash of keystore file</h4>
-keytool -exportcert -alias your-alias -keystore ~/your-keystore-path | openssl sha1 -binary | openssl sha256
+keytool -exportcert -alias androiddebugkey -keystore ~/your-keystore-path | openssl sha1 -binary | openssl sha256
