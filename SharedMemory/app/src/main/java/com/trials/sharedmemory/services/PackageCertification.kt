@@ -2,6 +2,7 @@ package com.trials.sharedmemory.services
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -20,12 +21,22 @@ class PackageCertification {
             if (pkgname == null) return null
             try {
                 val pm = ctx.packageManager
-                val pkginfo = pm.getPackageInfo(pkgname, PackageManager.GET_SIGNATURES)
-                if (pkginfo.signatures.size != 1) return null
-                val sig = pkginfo.signatures[0]
-                val cert = sig.toByteArray()
-                val sha256 = computeSha256(cert)
-                return byte2hex(sha256)
+                val packageInfo: Any
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    packageInfo = pm.getPackageInfo(pkgname, PackageManager.GET_SIGNING_CERTIFICATES)
+                    val sig = packageInfo.signingInfo.signingCertificateHistory
+                    if (sig.size != 1) return null
+                    val cert = sig[0].toByteArray()
+                    val sha256 = computeSha256(cert)
+                    return byte2hex(sha256)
+                } else {
+                    packageInfo = pm.getPackageInfo(pkgname, PackageManager.GET_SIGNATURES)
+                    val sig = packageInfo.signatures
+                    if (sig.size != 1) return null
+                    val cert = sig[0].toByteArray()
+                    val sha256 = computeSha256(cert)
+                    return byte2hex(sha256)
+                }
             } catch (e: PackageManager.NameNotFoundException) {
                 return null
             }

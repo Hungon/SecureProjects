@@ -18,8 +18,12 @@ class SignaturePermission {
                 val pm = ctx.packageManager
                 val pi = pm.getPermissionInfo(sigPermName, PackageManager.GET_META_DATA)
                 val pkgname = pi.packageName
-                if (pi.protectionLevel != PermissionInfo.PROTECTION_SIGNATURE) return false
-                return if (Build.VERSION.SDK_INT >= 28) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    if (pi.protection != PermissionInfo.PROTECTION_SIGNATURE) return false
+                } else {
+                    if (pi.protectionLevel != PermissionInfo.PROTECTION_SIGNATURE) return false
+                }
+                return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     pm.hasSigningCertificate(pkgname, correctHash?.toByteArray(), CERT_INPUT_SHA256)
                 } else {
                     correctHash.equals(PackageCertification.hash(ctx, pkgname))

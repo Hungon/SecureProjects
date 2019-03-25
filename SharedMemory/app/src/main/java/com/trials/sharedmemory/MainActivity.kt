@@ -177,8 +177,8 @@ class MainActivity : AppCompatActivity() {
     private fun releaseAllocatedMemory() {
         sendMessageToService(ShmService.MSG_DETACH)
         // unmap buffer
-        if (mBuf1 != null) SharedMemory.unmap(mBuf1)
-        if (mBuf2 != null) SharedMemory.unmap(mBuf2)
+        if (mBuf1 != null) SharedMemory.unmap(mBuf1!!)
+        if (mBuf2 != null) SharedMemory.unmap(mBuf2!!)
         // close memory
         myShared1?.close()
         myShared2?.close()
