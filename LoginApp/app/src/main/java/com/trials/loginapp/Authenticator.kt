@@ -11,7 +11,7 @@ import android.os.Bundle
 class Authenticator(private val context: Context) : AbstractAccountAuthenticator(context) {
 
 
-    private fun accountExist(account: Account): Boolean {
+    private fun accountExist(account: Account?): Boolean {
         val am = AccountManager.get(context)
         val accounts = am.getAccountsByType(TRIALS_ACCOUNT_TYPE)
         for (ac in accounts) {
@@ -49,15 +49,15 @@ class Authenticator(private val context: Context) : AbstractAccountAuthenticator
         authTokenType: String?,
         options: Bundle?
     ): Bundle {
-        val bundle = Bundle();
+        val bundle = Bundle()
         if (accountExist(account)) {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(RE_AUTH_NAME, account?.name)
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
             bundle.putParcelable(AccountManager.KEY_INTENT, intent)
         } else {
-            bundle.putString(AccountManager.KEY_ERROR_CODE, String.valueOf(-2))
-            bundle.putString(AccountManager.KEY_ERROR_MESSAGE, context.getString(R.string.error_account_not_exists));
+            bundle.putString(AccountManager.KEY_ERROR_CODE, "-2")
+            bundle.putString(AccountManager.KEY_ERROR_MESSAGE, context.getString(R.string.error_account_not_exists))
         }
         return bundle
     }
@@ -87,7 +87,7 @@ class Authenticator(private val context: Context) : AbstractAccountAuthenticator
         val accounts = am.getAccountsByType(TRIALS_ACCOUNT_TYPE);
         val bundle = Bundle()
         if (accounts.isNotEmpty()) {
-            context.getString(R.string.error_account_exists))
+            context.getString(R.string.error_account_exists)
         } else {
             val intent = Intent(context, LoginActivity::class.java)
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response)
@@ -97,9 +97,9 @@ class Authenticator(private val context: Context) : AbstractAccountAuthenticator
     }
 
     companion object {
-        val TRIALS_ACCOUNT_TYPE = "com.trials.loginapp.accountmanager"
-        val TRIALS_AUTHTOKEN_TYPE = "webservice"
-        val TRIALS_AUTHTOKEN_LABEL = "Trials Web Service"
-        val RE_AUTH_NAME = "reauth_name"
+        const val TRIALS_ACCOUNT_TYPE = "com.trials.loginapp.accountmanager"
+        const val TRIALS_AUTHTOKEN_TYPE = "webservice"
+        const val TRIALS_AUTHTOKEN_LABEL = "Trials Web Service"
+        const val RE_AUTH_NAME = "reauth_name"
     }
 }

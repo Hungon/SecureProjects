@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application
             android:allowBackup="true"
@@ -15,7 +16,8 @@
             android:theme="@style/AppTheme">
 
         <service
-                android:name=".AuthenticationService" android:exported="false">
+            android:name=".AuthenticationService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>

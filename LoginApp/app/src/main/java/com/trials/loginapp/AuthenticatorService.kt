@@ -7,11 +7,12 @@ import android.os.IBinder
 
 class AuthenticationService : Service() {
     private var mAuthenticator: Authenticator? = null
-    fun onCreate() {
+
+    override fun onCreate() {
         mAuthenticator = Authenticator(this)
     }
 
-    fun onBind(intent: Intent): IBinder {
-        return mAuthenticator!!.getIBinder()
+    override fun onBind(intent: Intent): IBinder {
+        return mAuthenticator!!.iBinder
     }
 }

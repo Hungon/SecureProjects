@@ -15,16 +15,13 @@ import android.app.Activity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import sun.security.jgss.GSSUtil.login
-
-
 
 
 class LoginActivity : AccountAuthenticatorActivity() {
 
     private var reAuthName: String? = null
-    private var nameEdit: EditText? = null
-    private var passEdit: EditText? = null
+    private lateinit var nameEdit: EditText
+    private lateinit var passEdit: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +30,20 @@ class LoginActivity : AccountAuthenticatorActivity() {
         requestWindowFeature(Window.FEATURE_LEFT_ICON)
         setContentView(R.layout.login_activity)
         window.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, android.R.drawable.ic_dialog_alert)
-        nameEdit = findViewById (R.id.username_edit)
-        passEdit = findViewById (R.id.password_edit)
+        nameEdit = findViewById (R.id.input_user_name)
+        passEdit = findViewById (R.id.input_password)
         reAuthName = intent.getStringExtra(Authenticator.RE_AUTH_NAME)
         if (reAuthName != null) {
-            nameEdit?.setText(reAuthName)
-            nameEdit?.inputType = InputType.TYPE_NULL
-            nameEdit?.isFocusable = false
-            nameEdit?.isEnabled = false
+            nameEdit.setText(reAuthName)
+            nameEdit.inputType = InputType.TYPE_NULL
+            nameEdit.isFocusable = false
+            nameEdit.isEnabled = false
         }
     }
 
     fun handleLogin(view: View) {
-        val name = nameEdit?.text.toString()
-        val pass = passEdit?.text.toString()
+        val name = nameEdit.text.toString()
+        val pass = passEdit.text.toString()
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(pass)) {
             setResult(RESULT_CANCELED)
             finish()
