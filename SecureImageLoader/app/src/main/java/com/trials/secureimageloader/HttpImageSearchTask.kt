@@ -67,7 +67,7 @@ abstract class HttpImageSearchTask : AsyncTask<String, Void, Any?>() {
             s.append('+')
         }
         s.deleteCharAt(s.length - 1)
-        val search_url = "http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + s.toString()
+        val search_url = Constants.IMAGE_URL + s.toString()
         responseArray = getByteArray(search_url)
         if (responseArray == null) {
             return null

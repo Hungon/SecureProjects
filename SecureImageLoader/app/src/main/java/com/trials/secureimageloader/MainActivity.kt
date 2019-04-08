@@ -75,12 +75,14 @@ class MainActivity : AppCompatActivity() {
         asyncTask?.cancel(true)
         asyncTask = object : HttpsImageSearchTask() {
             override fun onPostExecute(result: Any?) {
-                if (result is Exception) {
-                    msgBox.append("\nException happened\n$result")
-                } else {
-                    val data = result as ByteArray
-                    val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
-                    imgBox.setImageBitmap(bmp)
+                if (result != null) {
+                    if (result is Exception) {
+                        msgBox.append("\nException happened\n$result")
+                    } else {
+                        val data = result as ByteArray
+                        val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
+                        imgBox.setImageBitmap(bmp)
+                    }
                 }
             }
         }.execute(query)

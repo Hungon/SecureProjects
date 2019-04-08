@@ -42,7 +42,7 @@ abstract class HttpsImageSearchTask : AsyncTask<String, Void, Any?>() {
                 if (length > 0) responseArray.write(buff, 0, length)
             }
             result = responseArray.toByteArray()
-        } catch(e: SSLException) {
+        } catch (e: SSLException) {
             Log.e(TAG, e.message)
         } catch (e: IOException) {
             Log.e(TAG, e.message)
@@ -70,7 +70,7 @@ abstract class HttpsImageSearchTask : AsyncTask<String, Void, Any?>() {
             s.append('+')
         }
         s.deleteCharAt(s.length - 1)
-        val search_url = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=" + s.toString()
+        val search_url = Constants.IMAGE_URL + s.toString()
         responseArray = getByteArray(search_url)
         if (responseArray == null) {
             return null
