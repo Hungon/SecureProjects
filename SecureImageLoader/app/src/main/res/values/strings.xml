@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SecureImageLoader</string>
+    <string name="button_search_image_with_http">Search in Http!</string>
+    <string name="button_search_image_with_https">Search in Https!</string>
+</resources>
