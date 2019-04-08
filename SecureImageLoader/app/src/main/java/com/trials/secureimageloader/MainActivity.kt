@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.EditText
 import android.widget.ImageView
+import org.json.JSONException
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPostExecute(result: Any?) {
                 when (result) {
                     null -> {
-                        msgBox.append("\nException happened\n")
+                        msgBox.append("Result is null!")
                     }
                     is Exception -> {
                         msgBox.append("\nException happened\n  $result")
@@ -75,10 +76,14 @@ class MainActivity : AppCompatActivity() {
         asyncTask?.cancel(true)
         asyncTask = object : HttpsImageSearchTask() {
             override fun onPostExecute(result: Any?) {
-                if (result != null) {
-                    if (result is Exception) {
+                when (result) {
+                    null -> {
+                        msgBox.append("Result is null!")
+                    }
+                    is Exception -> {
                         msgBox.append("\nException happened\n$result")
-                    } else {
+                    }
+                    else -> {
                         val data = result as ByteArray
                         val bmp = BitmapFactory.decodeByteArray(data, 0, data.size)
                         imgBox.setImageBitmap(bmp)

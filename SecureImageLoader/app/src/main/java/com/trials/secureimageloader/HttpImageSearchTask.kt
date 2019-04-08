@@ -81,11 +81,8 @@ abstract class HttpImageSearchTask : AsyncTask<String, Void, Any?>() {
             return e
         }
         // Get image
-        if (image_url != null) {
-            responseArray = getByteArray(image_url)
-            if (responseArray == null) {
-                return null
-            }
+        image_url?.let {
+            responseArray = getByteArray(it)
         }
         return responseArray
     }

@@ -76,7 +76,7 @@ abstract class HttpsImageSearchTask : AsyncTask<String, Void, Any?>() {
             return null
         }
         // Ensure received data is right data
-        var image_url = ""
+        var image_url: String? = null
         try {
             val json = String(responseArray)
             image_url = JSONObject(json).getJSONObject("responseData").getJSONArray("results").getJSONObject(0)
@@ -86,11 +86,8 @@ abstract class HttpsImageSearchTask : AsyncTask<String, Void, Any?>() {
         }
         // Get image with https
         // it can contain sensitive info
-        if (image_url != null) {
-            responseArray = getByteArray(image_url)
-            if (responseArray == null) {
-                return null
-            }
+        image_url?.let {
+            responseArray = getByteArray(it)
         }
         return responseArray
     }
