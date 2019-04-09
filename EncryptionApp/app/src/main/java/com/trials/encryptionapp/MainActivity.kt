@@ -59,14 +59,14 @@ class MainActivity : AppCompatActivity() {
                     val decrypted = cryption.decrypt(encrypted, password.toCharArray())
                     text_result.text = decrypted.toString()
                 }
-                R.id.radio_aes_shared -> {
 /*
+                R.id.radio_aes_shared -> {
                     val aesCryptoSharedKey = AesCryptoPreSharedKey()
                     val encrypted = aesCryptoSharedKey.encrypt(password.toByteArray(), plainText.toByteArray())
                     val decrypted = aesCryptoSharedKey.decrypt(password.toByteArray(), encrypted)
                     text_result.text = decrypted.toString()
-*/
                 }
+*/
                 R.id.radio_hmac -> {
                     val cryption = HmacPBEKey()
                     val encrypted = cryption.sign(plainText.toByteArray(), password.toCharArray())
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
             // Check which radio button was clicked
             when (view.id) {
                 R.id.radio_aes,
-                R.id.radio_aes_shared,
+//                R.id.radio_aes_shared,
                 R.id.radio_hmac,
                 R.id.radio_hmac_shared,
                 R.id.radio_rsa,

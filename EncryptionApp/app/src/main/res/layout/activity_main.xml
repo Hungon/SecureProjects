@@ -66,11 +66,14 @@
                      android:layout_height="wrap_content"
                      android:text="@string/radio_button_aes"
                      android:onClick="onRadioButtonClicked"/>
+
+        <!--
         <RadioButton android:id="@+id/radio_aes_shared"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="@string/radio_button_aes_shared"
                      android:onClick="onRadioButtonClicked"/>
+       -->
         <RadioButton android:id="@+id/radio_hmac"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
