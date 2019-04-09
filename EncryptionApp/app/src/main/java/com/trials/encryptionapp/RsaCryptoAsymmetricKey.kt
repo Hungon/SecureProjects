@@ -41,7 +41,7 @@ class RsaCryptoAsymmetricKey {
         return encrypted
     }
 
-    fun decrypt(encrypted: ByteArray, keyData: ByteArray): ByteArray? {
+    fun decrypt(encrypted: ByteArray?, keyData: ByteArray): ByteArray? {
         // 本来、復号処理はサーバー側で実装すべきものであるが、
         // 本サンプルでは動作確認用に、アプリ内でも復号処理を実装した。
         // 実際にサンプルコードを利用する場合は、アプリ内に秘密鍵を保持しないようにすること。

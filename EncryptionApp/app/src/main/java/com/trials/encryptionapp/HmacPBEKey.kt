@@ -50,9 +50,9 @@ class HmacPBEKey {
         return hmac
     }
 
-    fun verify(hmac: ByteArray, plain: ByteArray, password: CharArray): Boolean {
+    fun verify(hmac: ByteArray?, plain: ByteArray, password: CharArray): Boolean {
         val hmacForPlain = calculate(plain, password)
-        return (Arrays.equals(hmac, hmacForPlain))
+        return (hmacForPlain != null && hmac != null && Arrays.equals(hmac, hmacForPlain))
     }
 
     companion object {

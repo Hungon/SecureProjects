@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">EncryptionApp</string>
+    <string name="app_description">This app demonstrates to make encryption.</string>
+    <string name="edit_form_hint_plain_text">fill out plain text</string>
+    <string name="edit_form_hint_password">fill out password</string>
+    <string name="radio_button_aes">AES</string>
+    <string name="radio_button_aes_shared">AES Shared</string>
+    <string name="radio_button_hmac">Hmac</string>
+    <string name="radio_button_hmac_shared">Hmac Shared</string>
+    <string name="radio_button_rsa">RSA</string>
+    <string name="radio_button_rsa_sign">RSA Sign</string>
+    <string name="toast_found_empty">please fill out %s.</string>
+
 </resources>

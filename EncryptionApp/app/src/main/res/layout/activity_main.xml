@@ -5,15 +5,102 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_mid"
         tools:context=".MainActivity">
 
     <TextView
+            android:id="@+id/app_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:text="@string/app_description"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="@dimen/font_size_big"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+            android:id="@+id/text_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="result here"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/margin_big"
+            android:textSize="@dimen/font_size_mid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_description"/>
+
+    <EditText
+            android:id="@+id/edit_plain_text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/edit_form_hint_plain_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+    <EditText
+            android:id="@+id/edit_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="@dimen/margin_mid"
+            android:hint="@string/edit_form_hint_password"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_plain_text"/>
+
+    <RadioGroup
+            android:id="@+id/group_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_mid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_password">
+
+        <RadioButton android:id="@+id/radio_aes"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_aes"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_aes_shared"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_aes_shared"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_hmac"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_hmac"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_hmac_shared"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_hmac_shared"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_rsa"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_rsa"
+                     android:onClick="onRadioButtonClicked"/>
+        <RadioButton android:id="@+id/radio_rsa_sign"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/radio_button_rsa_sign"
+                     android:onClick="onRadioButtonClicked"/>
+    </RadioGroup>
+    <Button
+            android:id="@+id/button_encrypt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="do encrypt"
+            android:layout_marginTop="@dimen/margin_mid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/group_radio"/>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -34,7 +34,7 @@ class RsaSignAsymmetricKey {
         return sign
     }
 
-    fun verify(sign: ByteArray, plain: ByteArray, keyData: ByteArray): Boolean {
+    fun verify(sign: ByteArray?, plain: ByteArray, keyData: ByteArray): Boolean {
         var ret = false
         try {
             // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する

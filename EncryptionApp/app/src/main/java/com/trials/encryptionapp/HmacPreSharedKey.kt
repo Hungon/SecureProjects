@@ -44,9 +44,9 @@ class HmacPreSharedKey {
         return hmac
     }
 
-    fun verify(hmac: ByteArray, plain: ByteArray, keyData: ByteArray): Boolean {
+    fun verify(hmac: ByteArray?, plain: ByteArray, keyData: ByteArray): Boolean {
         val hmacForPlain = calculate(plain, keyData)
-        return (hmacForPlain != null && Arrays.equals(hmac, hmacForPlain))
+        return (hmacForPlain != null && hmac != null && Arrays.equals(hmac, hmacForPlain))
     }
 
     companion object {

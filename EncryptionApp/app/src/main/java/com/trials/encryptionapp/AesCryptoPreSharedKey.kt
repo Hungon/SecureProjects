@@ -32,7 +32,7 @@ class AesCryptoPreSharedKey(private var iv: ByteArray) {
         return encrypted
     }
 
-    fun decrypt(keyData: ByteArray, encrypted: ByteArray): ByteArray? {
+    fun decrypt(keyData: ByteArray?, encrypted: ByteArray?): ByteArray? {
         var plain: ByteArray? = null
         try {
             // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
@@ -71,7 +71,11 @@ class AesCryptoPreSharedKey(private var iv: ByteArray) {
         // 鍵長チェック
         private const val MIN_KEY_LENGTH_BYTES = 16
 
-        private fun generateKey(keyData: ByteArray): SecretKey? {
+        private fun generateKey(keyData: ByteArray?): SecretKey? {
+            if (keyData ==null) {
+                Log.e(TAG,"generateKey() keyData is null")
+                return null
+            }
             var secretKey: SecretKey? = null
             try {
                 // ★ポイント 3 ★ 十分安全な長さを持つ鍵を利用する

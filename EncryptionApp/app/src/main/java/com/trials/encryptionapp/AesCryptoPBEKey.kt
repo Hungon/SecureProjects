@@ -55,7 +55,7 @@ class AesCryptoPBEKey {
         return encrypted
     }
 
-    fun decrypt(encrypted: ByteArray, password: CharArray): ByteArray? {
+    fun decrypt(encrypted: ByteArray?, password: CharArray): ByteArray? {
         var plain: ByteArray? = null
         try {
             // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
@@ -86,7 +86,8 @@ class AesCryptoPBEKey {
         private const val TRANSFORMATION = "AES/CBC/PKCS7Padding"
         // 鍵を生成するクラスのインスタンスを取得するための文字列
         private const val KEY_GENERATOR_MODE = "PBEWITHSHA256AND128BITAES-CBC-BC"
-        // ★ポイント 3 ★ パスワードから鍵を生成する場合は、Salt を使用する // Salt のバイト長
+        // ★ポイント 3 ★ パスワードから鍵を生成する場合は、Salt を使用する
+        // Salt のバイト長
         const val SALT_LENGTH_BYTES = 20
         // ★ポイント 4 ★ パスワードから鍵を生成する場合は、適正なハッシュの繰り返し回数を指定する
         // PBE で鍵を生成する際の攪拌の繰り返し回数
