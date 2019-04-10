@@ -13,18 +13,9 @@ import javax.crypto.NoSuchPaddingException
 
 class RsaCryptoAsymmetricKey {
 
-    // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-    // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
-    // Cipher クラスの getInstance に渡すパラメータ (/[暗号アルゴリズム]/[ブロック暗号モード]/[パディングルール])
-    // サンプルでは、暗号アルゴリズム=RSA、ブロック暗号モード=NONE、パディングルール=OAEPPADDING
-    // ★ポイント 3 ★ 十分安全な長さを持つ鍵を利用する
-    // 鍵長チェック
-
     fun encrypt(plain: ByteArray, keyData: ByteArray): ByteArray? {
         var encrypted: ByteArray? = null
         try {
-            // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-            // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val publicKey = generatePubKey(keyData)
             if (publicKey != null) {
@@ -46,14 +37,10 @@ class RsaCryptoAsymmetricKey {
         return encrypted
     }
 
+    // Decryption must be implemented on server side, but for sample it decrypts on client side
     fun decrypt(encrypted: ByteArray?, keyData: ByteArray): ByteArray? {
-        // 本来、復号処理はサーバー側で実装すべきものであるが、
-        // 本サンプルでは動作確認用に、アプリ内でも復号処理を実装した。
-        // 実際にサンプルコードを利用する場合は、アプリ内に秘密鍵を保持しないようにすること。
         var plain: ByteArray? = null
         try {
-            // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-            // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
             val cipher = Cipher.getInstance(TRANSFORMATION)
             val privateKey = generatePriKey(keyData)
             cipher.init(Cipher.DECRYPT_MODE, privateKey)
@@ -77,7 +64,7 @@ class RsaCryptoAsymmetricKey {
     companion object {
 
         private val TAG = RsaCryptoAsymmetricKey::class.java.simpleName
-        private const val TRANSFORMATION = "RSA/NONE/OAEPPADDING" // 暗号アルゴリズム
+        private const val TRANSFORMATION = "RSA/NONE/OAEPPADDING"
         private const val KEY_ALGORITHM = "RSA"
         private const val MIN_KEY_LENGTH = 2000
 
@@ -100,7 +87,6 @@ class RsaCryptoAsymmetricKey {
                     return null
                 }
             }
-            // ★ポイント 3 ★ 十分安全な長さを持つ鍵を利用する // 鍵長のチェック
             if (publicKey is RSAPublicKey) {
                 val len = publicKey.modulus.bitLength()
                 if (len < MIN_KEY_LENGTH) {

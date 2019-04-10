@@ -13,14 +13,10 @@ import java.security.spec.X509EncodedKeySpec
 class RsaSignAsymmetricKey {
 
 
+    // This process must be implemented on server side, but for sample it decrypts on client side
     fun sign(plain: ByteArray, keyData: ByteArray): ByteArray? {
-        // 本来、署名処理はサーバー側で実装すべきものであるが、
-        // 本サンプルでは動作確認用に、アプリ内でも署名処理を実装した。
-        // 実際にサンプルコードを利用する場合は、アプリ内に秘密鍵を保持しないようにすること。
         var sign: ByteArray? = null
         try {
-            // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-            // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
             val signature = Signature.getInstance(TRANSFORMATION)
             val privateKey = generatePriKey(keyData)
             signature.initSign(privateKey)
@@ -40,8 +36,6 @@ class RsaSignAsymmetricKey {
     fun verify(sign: ByteArray?, plain: ByteArray, keyData: ByteArray): Boolean {
         var ret = false
         try {
-            // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-            // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
             val signature = Signature.getInstance(TRANSFORMATION)
             val publicKey = generatePubKey(keyData)
             signature.initVerify(publicKey)
@@ -60,14 +54,8 @@ class RsaSignAsymmetricKey {
 
     companion object {
         private val TAG = RsaSignAsymmetricKey::class.java.simpleName
-        // ★ポイント 1 ★ 明示的に暗号モードとパディングを設定する
-        // ★ポイント 2 ★ 脆弱でない (基準を満たす) 暗号技術(アルゴリズム・モード・パディング等)を使用する
-        // Cipher クラスの getInstance に渡すパラメータ (/[暗号アルゴリズム]/[ブロック暗号モード]/[パディングルール])
-        // サンプルでは、暗号アルゴリズム=RSA、ブロック暗号モード=NONE、パディングルール=OAEPPADDING
         private const val TRANSFORMATION = "SHA256withRSA"
-        // 暗号アルゴリズム
         private const val KEY_ALGORITHM = "RSA"
-        // ★ポイント 3 ★ 十分安全な長さを持つ鍵を利用する // 鍵長チェック
         private const val MIN_KEY_LENGTH = 2000
 
         private fun generatePubKey(keyData: ByteArray): PublicKey? {
@@ -89,7 +77,6 @@ class RsaSignAsymmetricKey {
                     return null
                 }
             }
-            // ★ポイント 3 ★ 十分安全な長さを持つ鍵を利用する // 鍵長のチェック
             if (publicKey is RSAPublicKey) {
                 val len = publicKey.modulus.bitLength()
                 if (len < MIN_KEY_LENGTH) {
