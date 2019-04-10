@@ -38,7 +38,9 @@ class HmacPreSharedKey {
                 }
             }
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG, "calculate() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG, "calculate() ${e.message}")
         } finally {
         }
         return hmac
@@ -69,7 +71,8 @@ class HmacPreSharedKey {
                 } else {
                     null
                 }
-            } catch (e:IllegalArgumentException) {
+            } catch (e: IllegalArgumentException) {
+                Log.e(TAG, "generateKey() ${e.message}")
                 null
             }
         }

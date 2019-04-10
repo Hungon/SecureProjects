@@ -23,10 +23,15 @@ class AesCryptoPreSharedKey(private var iv: ByteArray) {
                 encrypted = cipher.doFinal(plain)
             }
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } finally {
         }
         return encrypted
@@ -45,11 +50,17 @@ class AesCryptoPreSharedKey(private var iv: ByteArray) {
                 plain = cipher.doFinal(encrypted)
             }
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: InvalidAlgorithmParameterException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } finally {
         }
         return plain

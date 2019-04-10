@@ -8,6 +8,7 @@ import android.widget.RadioButton
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.security.InvalidKeyException
+import java.security.KeyPair
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import javax.crypto.BadPaddingException
@@ -80,15 +81,17 @@ class MainActivity : AppCompatActivity() {
                     text_result.text = decrypted.toString()
                 }
                 R.id.radio_rsa -> {
+                    val keyPair = GenerateKeyPair.generate(4048)
                     val cryption = RsaCryptoAsymmetricKey()
-                    val encrypted = cryption.encrypt(plainText.toByteArray(), password.toByteArray())
-                    val decrypted = cryption.decrypt(encrypted, password.toByteArray())
+                    val encrypted = cryption.encrypt(plainText.toByteArray(), keyPair.public.encoded)
+                    val decrypted = cryption.decrypt(encrypted, keyPair.private.encoded)
                     text_result.text = decrypted.toString()
                 }
                 R.id.radio_rsa_sign -> {
+                    val keyPair = GenerateKeyPair.generate(4048)
                     val cryption = RsaSignAsymmetricKey()
-                    val encrypted = cryption.sign(plainText.toByteArray(), password.toByteArray())
-                    val decrypted = cryption.verify(encrypted, plainText.toByteArray(), password.toByteArray())
+                    val encrypted = cryption.sign(plainText.toByteArray(), keyPair.private.encoded)
+                    val decrypted = cryption.verify(encrypted, plainText.toByteArray(), keyPair.public.encoded)
                     text_result.text = decrypted.toString()
                 }
                 else -> {

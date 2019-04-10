@@ -46,10 +46,15 @@ class AesCryptoPBEKey {
             iv = cipher.iv
             encrypted = cipher.doFinal(plain)
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG,"encrypt() ${e.message}")
         } finally {
         }
         return encrypted
@@ -67,11 +72,17 @@ class AesCryptoPBEKey {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec)
             plain = cipher.doFinal(encrypted)
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: InvalidAlgorithmParameterException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG,"decrypt() ${e.message}")
         } finally {
         }
         return plain
@@ -116,7 +127,9 @@ class AesCryptoPBEKey {
                 // 鍵を生成する
                 secretKey = secretKeyFactory.generateSecret(keySpec)
             } catch (e: NoSuchAlgorithmException) {
+                Log.e(TAG,"generateKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
+                Log.e(TAG,"generateKey() ${e.message}")
             } finally {
                 keySpec?.clearPassword()
             }

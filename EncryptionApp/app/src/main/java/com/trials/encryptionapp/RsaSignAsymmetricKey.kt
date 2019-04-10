@@ -27,8 +27,11 @@ class RsaSignAsymmetricKey {
             signature.update(plain)
             sign = signature.sign()
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"sign() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"sign() ${e.message}")
         } catch (e: SignatureException) {
+            Log.e(TAG,"sign() ${e.message}")
         } finally {
         }
         return sign
@@ -45,8 +48,11 @@ class RsaSignAsymmetricKey {
             signature.update(plain)
             ret = signature.verify(sign)
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"verify() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"verify() ${e.message}")
         } catch (e: SignatureException) {
+            Log.e(TAG,"verify() ${e.message}")
         } finally {
         }
         return ret
@@ -71,9 +77,13 @@ class RsaSignAsymmetricKey {
                 keyFactory = KeyFactory.getInstance(KEY_ALGORITHM)
                 publicKey = keyFactory!!.generatePublic(X509EncodedKeySpec(keyData))
             } catch (e: IllegalArgumentException) {
+                Log.e(TAG,"generatePubKey() ${e.message}")
             } catch (e: NoSuchAlgorithmException) {
+                Log.e(TAG,"generatePubKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
+                Log.e(TAG,"generatePubKey() ${e.message}")
             } finally {
+                if (keyFactory == null) Log.e(TAG, "generatePubKey() keyFactory is null")
                 if (publicKey == null) {
                     Log.e(TAG, "generatePubKey() publicKey is null")
                     return null
@@ -83,6 +93,7 @@ class RsaSignAsymmetricKey {
             if (publicKey is RSAPublicKey) {
                 val len = publicKey.modulus.bitLength()
                 if (len < MIN_KEY_LENGTH) {
+                    Log.e(TAG, "$len Key length is insufficient. key length must be more than $MIN_KEY_LENGTH")
                     publicKey = null
                 }
             }
@@ -96,12 +107,17 @@ class RsaSignAsymmetricKey {
                 keyFactory = KeyFactory.getInstance(KEY_ALGORITHM)
                 privateKey = keyFactory.generatePrivate(PKCS8EncodedKeySpec(keyData))
             } catch (e: IllegalArgumentException) {
-
+                Log.e(TAG,"generatePriKey() ${e.message}")
             } catch (e: NoSuchAlgorithmException) {
-
+                Log.e(TAG,"generatePriKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
-
+                Log.e(TAG,"generatePriKey() ${e.message}")
             } finally {
+                if (keyFactory == null) Log.e(TAG, "generatePriKey() keyFactory is null")
+                if (privateKey == null) {
+                    Log.e(TAG, "generatePriKey() privateKey is null")
+                    return null
+                }
             }
             return privateKey
         }

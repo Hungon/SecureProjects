@@ -44,7 +44,9 @@ class HmacPBEKey {
             mac.init(secretKey)
             hmac = mac.doFinal(plain)
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG,"calculate() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG,"calculate() ${e.message}")
         } finally {
         }
         return hmac
@@ -92,7 +94,9 @@ class HmacPBEKey {
                 // 鍵を生成する
                 secretKey = secretKeyFactory.generateSecret(keySpec)
             } catch (e: NoSuchAlgorithmException) {
+                Log.e(TAG,"generateKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
+                Log.e(TAG,"generateKey() ${e.message}")
             } finally {
                 keySpec?.clearPassword()
             }

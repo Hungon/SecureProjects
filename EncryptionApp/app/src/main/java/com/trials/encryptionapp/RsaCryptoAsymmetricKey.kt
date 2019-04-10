@@ -32,10 +32,15 @@ class RsaCryptoAsymmetricKey {
                 encrypted = cipher.doFinal(plain)
             }
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG, "encrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG, "encrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG, "encrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG, "encrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG, "encrypt() ${e.message}")
         } finally {
         }
         return encrypted
@@ -54,10 +59,15 @@ class RsaCryptoAsymmetricKey {
             cipher.init(Cipher.DECRYPT_MODE, privateKey)
             plain = cipher.doFinal(encrypted)
         } catch (e: NoSuchAlgorithmException) {
+            Log.e(TAG, "decrypt() ${e.message}")
         } catch (e: NoSuchPaddingException) {
+            Log.e(TAG, "decrypt() ${e.message}")
         } catch (e: InvalidKeyException) {
+            Log.e(TAG, "decrypt() ${e.message}")
         } catch (e: IllegalBlockSizeException) {
+            Log.e(TAG, "decrypt() ${e.message}")
         } catch (e: BadPaddingException) {
+            Log.e(TAG, "decrypt() ${e.message}")
         } finally {
         }
         return plain
@@ -78,9 +88,13 @@ class RsaCryptoAsymmetricKey {
                 keyFactory = KeyFactory.getInstance(KEY_ALGORITHM)
                 publicKey = keyFactory?.generatePublic(X509EncodedKeySpec(keyData))
             } catch (e: IllegalArgumentException) {
+                Log.e(TAG, "generatePubKey() ${e.message}")
             } catch (e: NoSuchAlgorithmException) {
+                Log.e(TAG, "generatePubKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
+                Log.e(TAG, "generatePubKey() ${e.message}")
             } finally {
+                if (keyFactory == null) Log.e(TAG, "generatePubKey() keyFactory is null")
                 if (publicKey == null) {
                     Log.e(TAG, "generatePubKey() publicKey is null")
                     return null
@@ -90,6 +104,7 @@ class RsaCryptoAsymmetricKey {
             if (publicKey is RSAPublicKey) {
                 val len = publicKey.modulus.bitLength()
                 if (len < MIN_KEY_LENGTH) {
+                    Log.e(TAG, "$len Key length is insufficient. key length must be more than $MIN_KEY_LENGTH")
                     publicKey = null
                 }
             }
@@ -103,9 +118,17 @@ class RsaCryptoAsymmetricKey {
                 keyFactory = KeyFactory.getInstance(KEY_ALGORITHM)
                 privateKey = keyFactory!!.generatePrivate(PKCS8EncodedKeySpec(keyData))
             } catch (e: IllegalArgumentException) {
+                Log.e(TAG, "generatePriKey() ${e.message}")
             } catch (e: NoSuchAlgorithmException) {
+                Log.e(TAG, "generatePriKey() ${e.message}")
             } catch (e: InvalidKeySpecException) {
+                Log.e(TAG, "generatePriKey() ${e.message}")
             } finally {
+                if (keyFactory == null) Log.e(TAG, "generatePriKey() keyFactory is null")
+                if (privateKey == null) {
+                    Log.e(TAG, "generatePriKey() privateKey is null")
+                    return null
+                }
             }
             return privateKey
         }
